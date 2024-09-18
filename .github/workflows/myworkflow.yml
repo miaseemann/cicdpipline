@@ -1,0 +1,44 @@
+name: PHP Syntax Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      # Syntax check
+      - name: Syntax check index.php
+        run: |
+          php -l index.php
+          if [ $? -ne 0 ]; then
+            echo "Syntax error in index.php"
+            exit 1
+          fi
+
+      # Run index.php and check for true
+      - name: Run index.php and check for true
+        run: |
+          output=$(php -r 'include "index.php"; var_dump(checkLogic());')
+          if [[ "$output" == *"true"* ]]; then
+            echo "Test passed: index.php returned true"
+          else
+            echo "Test failed: index.php did not return true"
+            exit 1
+          fi
