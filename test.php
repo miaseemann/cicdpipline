@@ -3,7 +3,7 @@
 // Example index.php
 function checkLogic()
 {
-    x
+    
     return true;
 }
 
