@@ -24,21 +24,21 @@ jobs:
           php-version: '8.1'
 
       # Syntax check
-      - name: Syntax check index.php
+      - name: Syntax check test.php
         run: |
-          php -l index.php
+          php -l test.php
           if [ $? -ne 0 ]; then
-            echo "Syntax error in index.php"
+            echo "Syntax error in test.php"
             exit 1
           fi
 
-      # Run index.php and check for true
-      - name: Run index.php and check for true
+      # Run test.php and check for true
+      - name: Run test.php and check for true
         run: |
-          output=$(php -r 'include "index.php"; var_dump(checkLogic());')
+          output=$(php -r 'include "test.php"; var_dump(checkLogic());')
           if [[ "$output" == *"true"* ]]; then
-            echo "Test passed: index.php returned true"
+            echo "Test passed: test.php returned true"
           else
-            echo "Test failed: index.php did not return true"
+            echo "Test failed: test.php did not return true"
             exit 1
           fi
